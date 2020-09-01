@@ -7,7 +7,6 @@ use App\Service\WeatherService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class WeatherController extends AbstractController
@@ -25,20 +24,56 @@ class WeatherController extends AbstractController
     public function index(Request $request)
     {
         $ville = new Ville();
-
         $form = $this->createFormBuilder($ville)
             ->add('nom', TextType::class)
             ->getForm();
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $ville = $form->getData();
-
             return $this->redirectToRoute('weather_ville',['ville' => $ville->getNom()]);
         }
+
+        $WeatherDataRaw = $this->weatherService->getDefaultVille();
+        if (is_array($WeatherDataRaw)) {
+            $data = [
+                //lontitude
+                'lon' => $WeatherDataRaw['coord']['lon'],
+                //latitude
+                'lat' => $WeatherDataRaw['coord']['lat'],
+                //weather
+                'wid' => $WeatherDataRaw['weather'][0]['id'],
+                'condition' => $WeatherDataRaw['weather'][0]['main'],
+                'description' => ucfirst($WeatherDataRaw['weather'][0]['description']),
+                //weather
+                'icon_css' => $this->icon_css($WeatherDataRaw['weather'][0]['id']),
+                'icon_img' => $this->icon_img($WeatherDataRaw['weather'][0]['icon']),
+                'base' => $WeatherDataRaw['base'],
+                //main
+                'temperature' => round($WeatherDataRaw['main']['temp']),
+                'pressure' => $WeatherDataRaw['main']['pressure'],
+                'humidity' => $WeatherDataRaw['main']['humidity'] . "%",
+                'min' => round($WeatherDataRaw['main']['temp_min']),
+                'max' => round($WeatherDataRaw['main']['temp_max']),
+
+                //wind
+                'wind_speed' => $this->transformDays(0, $WeatherDataRaw['wind']['speed']),
+                'wind_deg' => $WeatherDataRaw['wind']['deg'],
+                //sys
+                'country_code' => $WeatherDataRaw['sys']['country'],
+                'sunrise' => $WeatherDataRaw['sys']['sunrise'],
+                'sunset' => $WeatherDataRaw['sys']['sunset'],
+                //general
+                'country_id' => $WeatherDataRaw['id'],
+                'country_name' => $WeatherDataRaw['name'],
+                'code' => $WeatherDataRaw['cod'],
+                'date' => date("d/m/Y", $WeatherDataRaw['dt']),
+                'day' => $this->transformDays(1, gmdate("w", $WeatherDataRaw['dt'])),
+            ];
+        }
         return $this->render('weather/index.html.twig', [
-            'form' => $form->createView()
-        ]);
+            'form' => $form->createView(),
+            'data' => $data
+            ]);
     }
 
 
@@ -90,10 +125,15 @@ class WeatherController extends AbstractController
 
             ];
                 // dd($WeatherMonths);
-                return $this->render('weather/result.html.twig', array("data" => $data,'ville' => $WeatherDataRaw['name']));
+                return $this->render('weather/result.html.twig', [
+                    'data' => $data,
+                    'ville' => $WeatherDataRaw['name']
+                ]);
         } else {
             // 
-            return $this->render('errors.html.twig', array("error" => $WeatherDataRaw));
+            return $this->render('errors.html.twig', [
+                "error" => $WeatherDataRaw
+            ]);
         }
       }
 
@@ -105,6 +145,7 @@ class WeatherController extends AbstractController
 
     public function icon_css($code = null)
     {
+        // https://erikflowers.github.io/weather-icons/api-list.html
         return "wi wi-owm-" . $code;
     }
 

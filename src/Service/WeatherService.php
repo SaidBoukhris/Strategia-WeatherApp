@@ -54,4 +54,13 @@ class WeatherService
             }
         }
     }
+
+    public function getDefaultVille()
+    {
+            $response = $this->client->request('GET', 
+            'https://api.openweathermap.org/data/2.5/weather?q=toulouse&units=metric&lang=fr&appid=' . $this->apiKey
+            );
+            $content = $response->getContent();
+            return json_decode($content, true);
+    }
 }

@@ -48,12 +48,20 @@ a:hover {
     min-height: 90%;
 }
 
+.home {
+    padding: 5rem;
+    background: rgb(255, 123, 0);
+}
+
+.result>h2 {
+    color: rgb(255, 255, 255);
+}
+
 .index {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 2rem;
-    background-color: rgba(255, 123, 0, 0);
 }
 
 .result {
