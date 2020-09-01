@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="stylesheet" href={{ asset( 'css/meteo.css')}}>
+</head>
+
+<body>
+    <h1 class="author"><span>Weather application by<a href="https://github.com/SaidBoukhris">  Said Boukhris</a> for <a href="https://strategia.io/">Strategia</a></span>
+    </h1>
+    <div class="wrapper">
+        {% block body %}{% endblock %}
+    </div>
+    <h2 class="author"><a class="link" href={{ path('main') }}>< Retour</a></h2>
+
+    {% block javascripts %}{% endblock %}
+</body>
+
+</html>

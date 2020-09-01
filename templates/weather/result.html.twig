@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Météo Strategia {% endblock %}
+
+{% block body %}
+<div class="result">
+    <div class="card">
+        <div class="info-box">
+            <div class="local">
+    <h3 class="label">{{ data.country_name }}</h3>
+                <p>{{ data.day }}</p>
+                <p>{{ data.date }}</p>
+            </div>
+            <div class="temperature">
+                <img src={{ data.icon_img }}>
+                <p>{{ data.description }}</p>
+                <h2>{{ data.temperature }}°C</h2>
+            </div>
+        </div>
+        <ul class="list">
+            <li class="list-item"><p>Temp. min.</p>{{ data.min }} °c</li>
+            <li class="list-item"><p>Temp. max.</p>{{ data.max }} °c</li>
+            <li class="list-item"><p>Pression</p>{{ data.pressure }} hPa</li>
+            <li class="list-item"><p>Humidité</p>{{ data.humidity }}</li>
+            <li class="list-item"><p>Vent à</p>{{ data.wind_speed }}</li>
+            <li class="list-item"><p>Direction vent</p>{{ data.wind_deg }}°</li>
+            <li class="list-item"><p>Levé du soleil</p>{{ data.sunrise | date('H:s', "Europe/Paris")}}</li>
+            <li class="list-item"><p>Couché du soleil</p>{{ data.sunset | date('H:s', "Europe/Paris")}}</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

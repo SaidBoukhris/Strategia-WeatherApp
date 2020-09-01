@@ -1,0 +1,229 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    min-height: 100%;
+}
+
+body {
+    font: 15px arial;
+    padding: 1rem;
+    color: rgb(255, 255, 255);
+    /* Thanks to Daniel Ramírez for sharing their work on Unsplash. */
+    background-image: url("https://images.unsplash.com/photo-1558486012-817176f84c6d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=60");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+a {
+    color: rgb(255, 255, 255);
+}
+
+a:hover {
+    color: rgb(0, 2, 104);
+}
+
+.link {
+    font-size: 3rem;
+    color: rgb(41, 41, 41);
+}
+
+.link:hover {
+    color: rgb(0, 2, 104);
+}
+
+.author {
+    color: rgb(255, 255, 255);
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    min-height: 90%;
+}
+
+.index {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    background-color: rgba(255, 123, 0, 0);
+}
+
+.result {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    background-color: rgba(255, 0, 0, 0);
+}
+
+.title {
+    padding-bottom: 1rem;
+    text-align: center;
+    font-size: 3rem;
+}
+
+.label {
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+    background-color: rgba(255, 123, 0, 0);
+    padding-bottom: 1rem;
+    text-align: center;
+    font-size: 3rem;
+}
+
+
+/* INDEX */
+
+.form {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: .5rem;
+    padding: 1rem auto;
+}
+
+.form>input {
+    width: 80%;
+    border: none;
+    margin: 0 auto;
+    padding: 1rem;
+    height: 80px;
+    border-radius: .3rem;
+    font-size: 3rem;
+}
+
+.form>button {
+    cursor: pointer;
+    margin: 0 auto;
+    padding: 1rem;
+    height: 80px;
+    border: none;
+    border-radius: .3rem;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    background-color: rgb(18, 109, 0);
+    font-size: 3rem;
+}
+
+.form>button:hover {
+    color: #126d00;
+    background-color: #ffffff;
+}
+
+
+/* RESULT */
+
+.card {
+    background-color: rgba(255, 0, 0, 0);
+    align-content: center;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.info-box {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 1rem;
+    border-radius: 1rem;
+    text-align: center;
+}
+
+.local {
+    height: 100%;
+    border-radius: .5rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.404);
+    justify-content: space-evenly;
+    color: rgb(255, 255, 255);
+    font-size: 4rem;
+    border: 1px solid rgb(255, 255, 255);
+}
+
+.local>p {
+    font-size: 2rem;
+}
+
+.temperature {
+    height: 100%;
+    border-radius: .5rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.404);
+    color: rgb(255, 255, 255);
+    font-size: 3rem;
+    border: 1px solid rgb(255, 255, 255);
+}
+
+.temperature>p {
+    font-size: 2rem;
+}
+
+.list {
+    color: rgb(255, 255, 255);
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.list-item {
+    border-radius: 1rem;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 80px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.432);
+    border: 1px solid rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
+}
+
+@media screen and (max-width: 760px) {
+    body {
+        background-size: 100vh;
+    }
+    .card {
+        margin: 1rem auto;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+        min-width: 50%;
+    }
+    .info-box {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .local {
+        width: 100%;
+    }
+    .temperature>p {
+        font-size: 1.5rem;
+    }
+    .temperature {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
