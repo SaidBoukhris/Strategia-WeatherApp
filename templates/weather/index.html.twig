@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %} {% block title %}WeatherApp Startegia{% endblock %} {% block body %}
-{# <div class="home"> #}
+<div class="wrapper">
     <div class="index">
         <h2 class="label">Saisissez une ville et valider</h2>
         {{ form_start(form) }}
@@ -14,7 +14,7 @@
         <div class="card">
             <div class="info-box">
                 <div class="local">
-        <h3 class="label">{{ data.country_name }}</h3>
+                    <h3 class="label">{{ data.country_name }}</h3>
                     <p>{{ data.day }}</p>
                     <p>{{ data.date }}</p>
                 </div>
@@ -36,5 +36,5 @@
             </ul>
         </div>
     </div>
-{# </div> #}
+</div>
 {% endblock %}

@@ -39,22 +39,18 @@ a:hover {
 }
 
 .author {
+    text-align: center;
     color: rgb(255, 255, 255);
 }
 
 .wrapper {
+    position: relative;
+    top: 2rem;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     min-height: 90%;
-}
-
-.home {
-    padding: 5rem;
-    background: rgb(255, 123, 0);
-}
-
-.result>h2 {
-    color: rgb(255, 255, 255);
+    gap: 5rem;
 }
 
 .index {
@@ -101,7 +97,7 @@ a:hover {
 }
 
 .form>input {
-    width: 80%;
+    max-width: 70%;
     border: none;
     margin: 0 auto;
     padding: 1rem;
@@ -192,7 +188,8 @@ a:hover {
 }
 
 .list-item {
-    border-radius: 1rem;
+    font-size: 1.5rem;
+    border-radius: .5rem;
     padding: 0.5rem;
     display: flex;
     flex-direction: column;
@@ -207,9 +204,11 @@ a:hover {
 
 @media screen and (max-width: 760px) {
     body {
-        background-size: 100vh;
+        background-size: 200vh;
+        font-size: 1rem;
     }
     .card {
+        font-size: 1.5rem;
         margin: 1rem auto;
         display: flex;
         flex-direction: column;
@@ -224,14 +223,27 @@ a:hover {
     .local {
         width: 100%;
     }
+    .local .label {
+        font-size: 5rem;
+    }
     .temperature>p {
-        font-size: 1.5rem;
+        font-size: 3rem;
+    }
+    .label {
+        font-size: 3.5rem;
     }
     .temperature {
-        width: 100%;
         display: flex;
+        width: 100%;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+    }
+    .list {
+        font-size: 1.5rem;
+    }
+    .list .list-item {
+        height: 100px;
+        font-size: 1.5rem;
     }
 }
