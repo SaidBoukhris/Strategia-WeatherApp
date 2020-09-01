@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Une erreur est survenue{% endblock %}</title>
+    <link rel="stylesheet" href={{ asset( '/css/weather.css')}}>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+    <h1 class="author">Weather application by<a href="https://github.com/SaidBoukhris">  Said Boukhris</a> for <a href="https://strategia.io/">Strategia</a></h1>
+    <div class="error">
+    {% block error %}
+        {{ error |nl2br }}
+        </br>
+        </br>
+        <a href={{ path('accueil')}}>Retour</a>
+    {% endblock %}
+    </div>
+</body>
+</html>

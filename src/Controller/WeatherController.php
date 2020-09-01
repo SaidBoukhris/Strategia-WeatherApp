@@ -19,121 +19,118 @@ class WeatherController extends AbstractController
     }
 
     /**
-     * @Route("/", name="main")
+     * @Route("/", name="accueil")
      */
     public function index(Request $request)
     {
         $ville = new Ville();
+
         $form = $this->createFormBuilder($ville)
             ->add('nom', TextType::class)
             ->getForm();
+
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
+
             $ville = $form->getData();
-            return $this->redirectToRoute('weather_ville',['ville' => $ville->getNom()]);
+
+            return $this->redirectToRoute('meteo_ville',[
+                'ville' => $ville->getNom()
+            ]);
         }
 
-        $WeatherDataRaw = $this->weatherService->getDefaultVille();
-        if (is_array($WeatherDataRaw)) {
-            $data = [
-                //lontitude
-                'lon' => $WeatherDataRaw['coord']['lon'],
-                //latitude
-                'lat' => $WeatherDataRaw['coord']['lat'],
-                //weather
-                'wid' => $WeatherDataRaw['weather'][0]['id'],
-                'condition' => $WeatherDataRaw['weather'][0]['main'],
-                'description' => ucfirst($WeatherDataRaw['weather'][0]['description']),
-                //weather
-                'icon_css' => $this->icon_css($WeatherDataRaw['weather'][0]['id']),
-                'icon_img' => $this->icon_img($WeatherDataRaw['weather'][0]['icon']),
-                'base' => $WeatherDataRaw['base'],
-                //main
-                'temperature' => round($WeatherDataRaw['main']['temp']),
-                'pressure' => $WeatherDataRaw['main']['pressure'],
-                'humidity' => $WeatherDataRaw['main']['humidity'] . "%",
-                'min' => round($WeatherDataRaw['main']['temp_min']),
-                'max' => round($WeatherDataRaw['main']['temp_max']),
+        $ligne = $this->weatherService->getDefaultVille();
 
-                //wind
-                'wind_speed' => $this->transformDays(0, $WeatherDataRaw['wind']['speed']),
-                'wind_deg' => $WeatherDataRaw['wind']['deg'],
-                //sys
-                'country_code' => $WeatherDataRaw['sys']['country'],
-                'sunrise' => $WeatherDataRaw['sys']['sunrise'],
-                'sunset' => $WeatherDataRaw['sys']['sunset'],
-                //general
-                'country_id' => $WeatherDataRaw['id'],
-                'country_name' => $WeatherDataRaw['name'],
-                'code' => $WeatherDataRaw['cod'],
-                'date' => date("d/m/Y", $WeatherDataRaw['dt']),
-                'day' => $this->transformDays(1, gmdate("w", $WeatherDataRaw['dt'])),
+        if (is_array($ligne)) {
+            $datas = [
+                'lon' => $ligne['coord']['lon'],
+                'lat' => $ligne['coord']['lat'],
+                'wid' => $ligne['weather'][0]['id'],
+                'condition' => $ligne['weather'][0]['main'],
+                'description' => ucfirst($ligne['weather'][0]['description']),
+                'icon_css' => $this->icon_css($ligne['weather'][0]['id']),
+                'icon_img' => $this->icon_img($ligne['weather'][0]['icon']),
+                'base' => $ligne['base'],
+                'temperature' => round($ligne['main']['temp']),
+                'pressure' => $ligne['main']['pressure'],
+                'humidity' => $ligne['main']['humidity'] . "%",
+                'min' => round($ligne['main']['temp_min']),
+                'max' => round($ligne['main']['temp_max']),
+                'wind_speed' => $this->days(0, $ligne['wind']['speed']),
+                'wind_deg' => $ligne['wind']['deg'],
+                'country_code' => $ligne['sys']['country'],
+                'sunrise' => $ligne['sys']['sunrise'],
+                'sunset' => $ligne['sys']['sunset'],
+                'country_id' => $ligne['id'],
+                'country_name' => $ligne['name'],
+                'code' => $ligne['cod'],
+                'date' => date("d/m/Y", $ligne['dt']),
+                'day' => $this->days(1, gmdate("w", $ligne['dt'])),
             ];
         }
-        return $this->render('weather/index.html.twig', [
+        return $this->render('weather/accueil.html.twig', [
             'form' => $form->createView(),
-            'data' => $data
+            'data' => $datas
             ]);
     }
 
 
     /**
-     * @Route("/weather/{ville}", name="weather_ville")
+     * @Route("/weather/{ville}", name="meteo_ville")
      */
     public function getWeatherData($ville)
     {
-      // data generation
-        // source: https://github.com/wadday/openweather/blob/master/src/Wadday/Openweather/Wadday.php
-        $WeatherDataRaw = $this->weatherService->getWeather($ville);
-        // dd($WeatherDataRaw);
-        // if no error
-        if (is_array($WeatherDataRaw)) {
-            $data = [
+        $ligne = $this->weatherService->getWeather($ville);
+
+        if (is_array($ligne)) {
+
+            $datas = [
                 //lontitude
-                'lon' => $WeatherDataRaw['coord']['lon'],
+                'lon' => $ligne['coord']['lon'],
                 //latitude
-                'lat' => $WeatherDataRaw['coord']['lat'],
+                'lat' => $ligne['coord']['lat'],
                 //weather
-                'wid' => $WeatherDataRaw['weather'][0]['id'],
-                'condition' => $WeatherDataRaw['weather'][0]['main'],
-                'description' => ucfirst($WeatherDataRaw['weather'][0]['description']),
+                'wid' => $ligne['weather'][0]['id'],
+                'condition' => $ligne['weather'][0]['main'],
+                'description' => ucfirst($ligne['weather'][0]['description']),
                 //weather
-                'icon_css' => $this->icon_css($WeatherDataRaw['weather'][0]['id']),
-                'icon_img' => $this->icon_img($WeatherDataRaw['weather'][0]['icon']),
-                'base' => $WeatherDataRaw['base'],
+                'icon_css' => $this->icon_css($ligne['weather'][0]['id']),
+                'icon_img' => $this->icon_img($ligne['weather'][0]['icon']),
+                'base' => $ligne['base'],
                 //main
-                'temperature' => round($WeatherDataRaw['main']['temp']),
-                'pressure' => $WeatherDataRaw['main']['pressure'],
-                'humidity' => $WeatherDataRaw['main']['humidity'] . "%",
-                'min' => round($WeatherDataRaw['main']['temp_min']),
-                'max' => round($WeatherDataRaw['main']['temp_max']),
+                'temperature' => round($ligne['main']['temp']),
+                'pressure' => $ligne['main']['pressure'],
+                'humidity' => $ligne['main']['humidity'] . "%",
+                'min' => round($ligne['main']['temp_min']),
+                'max' => round($ligne['main']['temp_max']),
 
                 //wind
-                'wind_speed' => $this->transformDays(0, $WeatherDataRaw['wind']['speed']),
-                'wind_deg' => $WeatherDataRaw['wind']['deg'],
+                'wind_speed' => $this->days(0, $ligne['wind']['speed']),
+                'wind_deg' => $ligne['wind']['deg'],
                 //sys
-                'country_code' => $WeatherDataRaw['sys']['country'],
-                'sunrise' => $WeatherDataRaw['sys']['sunrise'],
-                'sunset' => $WeatherDataRaw['sys']['sunset'],
+                'country_code' => $ligne['sys']['country'],
+                'sunrise' => $ligne['sys']['sunrise'],
+                'sunset' => $ligne['sys']['sunset'],
                 //general
-                'country_id' => $WeatherDataRaw['id'],
-                'country_name' => $WeatherDataRaw['name'],
-                'code' => $WeatherDataRaw['cod'],
-                'date' => date("d/m/Y", $WeatherDataRaw['dt']),
-                'day' => $this->transformDays(1, gmdate("w", $WeatherDataRaw['dt'])),
+                'country_id' => $ligne['id'],
+                'country_name' => $ligne['name'],
+                'code' => $ligne['cod'],
+                'date' => date("d/m/Y", $ligne['dt']),
+                'day' => $this->days(1, gmdate("w", $ligne['dt'])),
             
 
             ];
-                // dd($WeatherMonths);
-                return $this->render('weather/result.html.twig', [
-                    'data' => $data,
-                    'ville' => $WeatherDataRaw['name']
-                ]);
-        } else {
-            // 
-            return $this->render('errors.html.twig', [
-                "error" => $WeatherDataRaw
+            return $this->render('weather/resultat.html.twig', [
+                'data' => $datas,
+                'ville' => $ligne['name']
             ]);
+
+        } else {
+
+            return $this->render('error.html.twig', [
+                'error' => $ligne
+                ]);
         }
       }
 
@@ -149,9 +146,8 @@ class WeatherController extends AbstractController
         return "wi wi-owm-" . $code;
     }
 
-    public function transformDays($type, $data)
+    public function days($type, $datas)
     {
-
         if ($type == 1) {
             $days = array(
                 'Dimanche',
@@ -162,10 +158,9 @@ class WeatherController extends AbstractController
                 'Vendredi',
                 'Samedi'
             );
-            return $days[$data];
+            return $days[$datas];
         } else {
-            // Transform m/s to km/s
-            return round($data * 3600 / 1000, 2) . ' km/h';
+            return round($datas * 3600 / 1000, 2) . ' km/h';
         }
     }
 }

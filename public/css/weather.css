@@ -15,18 +15,40 @@ body {
     font: 15px arial;
     padding: 1rem;
     color: rgb(255, 255, 255);
-    /* Thanks to Daniel Ramírez for sharing their work on Unsplash. */
-    background-image: url("https://images.unsplash.com/photo-1558486012-817176f84c6d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=60");
+    background-image: url("https://images.unsplash.com/photo-1592601250984-da0dc45e25f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=60");
+    /* Thanks to Ivan Ulamec for sharing their work on Unsplash. */
     background-size: cover;
     background-repeat: no-repeat;
 }
 
-a {
-    color: rgb(255, 255, 255);
+.error {
+    max-width: 400px;
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 2rem;
+    top: 5rem;
+    color: rgb(255, 251, 251);
+    font-size: 1.5rem;
 }
 
-a:hover {
-    color: rgb(0, 2, 104);
+a {
+    border-radius: .2rem;
+    padding: .2rem;
+    text-decoration: none;
+    border: 1px solid rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0.404);
+    color: #ffffff;
+    transition: all .5s ease-out;
+}
+
+a:hover,
+a:focus {
+    background-color: rgba(0, 38, 255, 0.404);
+    border-radius: 1rem;
 }
 
 .link {
@@ -39,7 +61,11 @@ a:hover {
 }
 
 .author {
-    text-align: center;
+    margin: 0 auto;
+    max-width: 800px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
     color: rgb(255, 255, 255);
 }
 
@@ -60,7 +86,7 @@ a:hover {
     gap: 2rem;
 }
 
-.result {
+.resultat {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -117,6 +143,7 @@ a:hover {
     color: rgb(255, 255, 255);
     background-color: rgb(18, 109, 0);
     font-size: 3rem;
+    transition: all .3s ease-in;
 }
 
 .form>button:hover {
@@ -188,7 +215,7 @@ a:hover {
 }
 
 .list-item {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     border-radius: .5rem;
     padding: 0.5rem;
     display: flex;
@@ -202,13 +229,12 @@ a:hover {
     color: rgb(255, 255, 255);
 }
 
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 936px) {
     body {
         background-size: 200vh;
         font-size: 1rem;
     }
     .card {
-        font-size: 1.5rem;
         margin: 1rem auto;
         display: flex;
         flex-direction: column;
@@ -224,7 +250,7 @@ a:hover {
         width: 100%;
     }
     .local .label {
-        font-size: 5rem;
+        font-size: 4rem;
     }
     .temperature>p {
         font-size: 3rem;
