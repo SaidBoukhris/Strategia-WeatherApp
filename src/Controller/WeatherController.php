@@ -86,33 +86,24 @@ class WeatherController extends AbstractController
         if (is_array($ligne)) {
 
             $datas = [
-                //lontitude
                 'lon' => $ligne['coord']['lon'],
-                //latitude
                 'lat' => $ligne['coord']['lat'],
-                //weather
                 'wid' => $ligne['weather'][0]['id'],
                 'condition' => $ligne['weather'][0]['main'],
                 'description' => ucfirst($ligne['weather'][0]['description']),
-                //weather
                 'icon_css' => $this->icon_css($ligne['weather'][0]['id']),
                 'icon_img' => $this->icon_img($ligne['weather'][0]['icon']),
                 'base' => $ligne['base'],
-                //main
                 'temperature' => round($ligne['main']['temp']),
                 'pressure' => $ligne['main']['pressure'],
                 'humidity' => $ligne['main']['humidity'] . "%",
                 'min' => round($ligne['main']['temp_min']),
                 'max' => round($ligne['main']['temp_max']),
-
-                //wind
                 'wind_speed' => $this->days(0, $ligne['wind']['speed']),
                 'wind_deg' => $ligne['wind']['deg'],
-                //sys
                 'country_code' => $ligne['sys']['country'],
                 'sunrise' => $ligne['sys']['sunrise'],
                 'sunset' => $ligne['sys']['sunset'],
-                //general
                 'country_id' => $ligne['id'],
                 'country_name' => $ligne['name'],
                 'code' => $ligne['cod'],

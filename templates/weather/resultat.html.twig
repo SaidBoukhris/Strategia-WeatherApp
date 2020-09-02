@@ -3,6 +3,7 @@
 {% block title %} Météo Strategia {% endblock %}
 
 {% block body %}
+{# Partie Affichage météo #}
 <div class="result">
     <div class="card">
         <div class="info-box">
@@ -29,6 +30,5 @@
         </ul>
     </div>
 </div>
-
-    <h2 class="link" ><a href={{ path('accueil') }}>Retour</a></h2>
+<h2 class="link"><a href={{ path('accueil') }}>Retour</a></h2>
 {% endblock %}
