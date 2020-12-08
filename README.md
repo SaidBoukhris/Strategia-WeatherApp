@@ -1,4 +1,4 @@
-# exo-sf
+# Test for Strategia job
 
 ### Objectifs
 
